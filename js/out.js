@@ -10137,6 +10137,8 @@ var LettersMissed = function (_React$Component15) {
   return LettersMissed;
 }(_react2.default.Component);
 
+var indexToShow = [];
+
 var Word = function (_React$Component16) {
   _inherits(Word, _React$Component16);
 
@@ -10146,20 +10148,47 @@ var Word = function (_React$Component16) {
     var _this16 = _possibleConstructorReturn(this, (Word.__proto__ || Object.getPrototypeOf(Word)).call(this, props));
 
     _this16.state = {
-      word: _this16.props.word.toLowerCase().split(''),
-      display: []
+      word: _this16.props.word.toLowerCase().split('')
     };
     return _this16;
   }
 
   _createClass(Word, [{
-    key: 'componentDidUpdate',
-    value: function componentDidUpdate() {
-      if (this.props.word.indexOf(this.props.letter) != -1) {
-        console.log('sukces' + this.props.word.indexOf(this.props.letter));
+    key: 'checkIndex',
+    value: function checkIndex() {
+      // function getAllIndexes(arr, val) {
+      //   let indexes = [], i;
+      //   for(i = 0; i < arr.length; i++){
+      //     if (arr[i] === val){
+      //       indexes.push(i);
+      //     }
+      //   }
+      //   return indexes;
+      // }
+      // let indexOfLetterInWord = getAllIndexes(this.props.word, this.props.letter);
+
+      var indexOfLetterInWord = this.props.word.indexOf(this.props.letter);
+      console.log(indexOfLetterInWord);
+      if (indexOfLetterInWord != -1) {
+        console.log("wszedlem do pierwszego ifa" + indexToShow);
+        if (indexToShow.indexOf(indexOfLetterInWord) == -1) {
+          console.log("wszedlem do DRUGIEGO ifa");
+          indexToShow.push(indexOfLetterInWord);
+        }
+        console.log(indexToShow);
       } else {
         console.log('zonk');
       }
+      return Array.from(this.state.word).map(function (item, index) {
+        if (indexToShow.indexOf(index) != -1) {
+          return _react2.default.createElement(
+            'div',
+            { className: 'letter', key: index },
+            item
+          );
+        }
+        return _react2.default.createElement('div', { className: 'letter', key: index });
+      });
     }
   }, {
     key: 'render',
@@ -10167,9 +10196,7 @@ var Word = function (_React$Component16) {
       return _react2.default.createElement(
         'div',
         { className: 'word-wrapper' },
-        Array.from(this.state.word).map(function (item, index) {
-          return _react2.default.createElement('div', { className: 'letter', key: index });
-        })
+        this.checkIndex()
       );
       // return <div className="word-wrapper">
       //   {Array.from(this.state.word).map(function (item, index) {

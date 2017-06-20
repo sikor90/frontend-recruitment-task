@@ -97,6 +97,7 @@ class LegsWrapper extends React.Component {
   }
 }
 class HangMan extends React.Component {
+
   render() {
     return <div className="hangman-wrapper">
       <Bar />
@@ -115,27 +116,49 @@ class LettersMissed extends React.Component {
     </div>;
   }
 }
-
+let indexToShow = [];
 class Word extends React.Component {
   constructor(props) {
       super(props);
       this.state = {
-          word: this.props.word.toLowerCase().split(''),
-          display: []
+          word: this.props.word.toLowerCase().split('')
       };
   }
-  componentDidUpdate(){
-    if (this.props.word.indexOf(this.props.letter) != -1) {
-      console.log('sukces'+this.props.word.indexOf(this.props.letter));
+
+  checkIndex(){
+    // function getAllIndexes(arr, val) {
+    //   let indexes = [], i;
+    //   for(i = 0; i < arr.length; i++){
+    //     if (arr[i] === val){
+    //       indexes.push(i);
+    //     }
+    //   }
+    //   return indexes;
+    // }
+    // let indexOfLetterInWord = getAllIndexes(this.props.word, this.props.letter);
+
+    let indexOfLetterInWord = this.props.word.indexOf(this.props.letter);
+    console.log(indexOfLetterInWord);
+    if (indexOfLetterInWord != -1) {
+      console.log("wszedlem do pierwszego ifa"+indexToShow);
+      if (indexToShow.indexOf(indexOfLetterInWord) == -1) {
+        console.log("wszedlem do DRUGIEGO ifa");
+        indexToShow.push(indexOfLetterInWord);
+      }
+      console.log(indexToShow);
     }else {
       console.log('zonk');
     }
+    return Array.from(this.state.word).map(function (item, index) {
+      if (indexToShow.indexOf(index) != -1){
+        return <div className="letter" key={index}>{item}</div>;
+      }
+      return <div className="letter" key={index}></div>;
+    })
   }
   render() {
     return <div className="word-wrapper">
-      {Array.from(this.state.word).map(function (item, index) {
-        return <div className="letter" key={index}></div>;
-      })}
+      {this.checkIndex()}
     </div>;
     // return <div className="word-wrapper">
     //   {Array.from(this.state.word).map(function (item, index) {
