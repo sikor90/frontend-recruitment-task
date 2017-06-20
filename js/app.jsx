@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 class Bar extends React.Component {
   render() {
-    return <div>
+    return <div className="hang-wrapper">
       <div className="bar"></div>
       <div className="hang"></div>
     </div>;
@@ -22,25 +22,28 @@ class Neck extends React.Component {
 class Stomach extends React.Component {
   render() {
     return <div className="hangmanBody-wrapper">
+      <LeftArm />
       <div className="stomach">
         <div className="stomach-left"></div>
         <div className="stomach-right"></div>
       </div>
       <RightArm />
-      <LeftArm />
     </div>;
   }
 }
 class RightArm extends React.Component {
   render() {
-    return <div className="right-arm">
+    return <div>
+      <div className="right-arm"></div>
       <RightHand />
     </div>;
   }
 }
 class LeftArm extends React.Component {
   render() {
-    return <div className="left-arm">
+    return <div>
+      <div className="left-arm">
+      </div>
       <LeftHand />
     </div>;
   }
@@ -65,8 +68,9 @@ class LeftFoot extends React.Component {
 }
 class LeftLeg extends React.Component {
   render() {
-    return <div className="left-leg">
+    return <div className="left-leg-wrapper">
       <LeftFoot />
+      <div className="left-leg"></div>
     </div>;
   }
 }
@@ -78,7 +82,8 @@ class RightFoot extends React.Component {
 }
 class RightLeg extends React.Component {
   render() {
-    return <div className="right-leg">
+    return <div className="right-leg-wrapper">
+      <div className="right-leg"></div>
       <RightFoot />
     </div>;
   }

@@ -9804,7 +9804,7 @@ var Bar = function (_React$Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        null,
+        { className: 'hang-wrapper' },
         _react2.default.createElement('div', { className: 'bar' }),
         _react2.default.createElement('div', { className: 'hang' })
       );
@@ -9867,14 +9867,14 @@ var Stomach = function (_React$Component4) {
       return _react2.default.createElement(
         'div',
         { className: 'hangmanBody-wrapper' },
+        _react2.default.createElement(LeftArm, null),
         _react2.default.createElement(
           'div',
           { className: 'stomach' },
           _react2.default.createElement('div', { className: 'stomach-left' }),
           _react2.default.createElement('div', { className: 'stomach-right' })
         ),
-        _react2.default.createElement(RightArm, null),
-        _react2.default.createElement(LeftArm, null)
+        _react2.default.createElement(RightArm, null)
       );
     }
   }]);
@@ -9896,7 +9896,8 @@ var RightArm = function (_React$Component5) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'right-arm' },
+        null,
+        _react2.default.createElement('div', { className: 'right-arm' }),
         _react2.default.createElement(RightHand, null)
       );
     }
@@ -9919,7 +9920,8 @@ var LeftArm = function (_React$Component6) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'left-arm' },
+        null,
+        _react2.default.createElement('div', { className: 'left-arm' }),
         _react2.default.createElement(LeftHand, null)
       );
     }
@@ -9999,8 +10001,9 @@ var LeftLeg = function (_React$Component10) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'left-leg' },
-        _react2.default.createElement(LeftFoot, null)
+        { className: 'left-leg-wrapper' },
+        _react2.default.createElement(LeftFoot, null),
+        _react2.default.createElement('div', { className: 'left-leg' })
       );
     }
   }]);
@@ -10041,7 +10044,8 @@ var RightLeg = function (_React$Component12) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'right-leg' },
+        { className: 'right-leg-wrapper' },
+        _react2.default.createElement('div', { className: 'right-leg' }),
         _react2.default.createElement(RightFoot, null)
       );
     }
