@@ -10117,7 +10117,20 @@ var LettersMissed = function (_React$Component15) {
   _createClass(LettersMissed, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement('div', { className: 'letterMissed-wrapper' });
+      return _react2.default.createElement(
+        'div',
+        { className: 'letterMissed-wrapper' },
+        _react2.default.createElement(
+          'h3',
+          null,
+          'YOU MISSED:'
+        ),
+        _react2.default.createElement(
+          'h2',
+          null,
+          'A B C D E F G'
+        )
+      );
     }
   }]);
 
@@ -10127,16 +10140,42 @@ var LettersMissed = function (_React$Component15) {
 var Word = function (_React$Component16) {
   _inherits(Word, _React$Component16);
 
-  function Word() {
+  function Word(props) {
     _classCallCheck(this, Word);
 
-    return _possibleConstructorReturn(this, (Word.__proto__ || Object.getPrototypeOf(Word)).apply(this, arguments));
+    var _this16 = _possibleConstructorReturn(this, (Word.__proto__ || Object.getPrototypeOf(Word)).call(this, props));
+
+    _this16.state = {
+      word: _this16.props.word.toLowerCase().split(''),
+      display: []
+    };
+    return _this16;
   }
 
   _createClass(Word, [{
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate() {
+      if (this.props.word.indexOf(this.props.letter) != -1) {
+        console.log('sukces' + this.props.word.indexOf(this.props.letter));
+      } else {
+        console.log('zonk');
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement('div', { className: 'word-wrapper' });
+      return _react2.default.createElement(
+        'div',
+        { className: 'word-wrapper' },
+        Array.from(this.state.word).map(function (item, index) {
+          return _react2.default.createElement('div', { className: 'letter', key: index });
+        })
+      );
+      // return <div className="word-wrapper">
+      //   {Array.from(this.state.word).map(function (item, index) {
+      //     return <div className="letter" key={index}></div>;
+      //   })}
+      // </div>;
     }
   }]);
 
@@ -10165,23 +10204,67 @@ var BlueTriangle = function (_React$Component17) {
 var App = function (_React$Component18) {
   _inherits(App, _React$Component18);
 
-  function App() {
+  function App(props) {
     _classCallCheck(this, App);
 
-    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+    var _this18 = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+    _this18.state = {
+      word: ''
+    };
+    return _this18;
   }
 
   _createClass(App, [{
+    key: 'getWord',
+    value: function getWord() {
+      var _this19 = this;
+
+      fetch('http://api.wordnik.com:80/v4/words.json/randomWord?hasDictionaryDef=false&minCorpusCount=0&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5').then(function (resp) {
+        return resp.json();
+      }).then(function (obj) {
+        _this19.setState({
+          word: obj.word
+        });
+        console.log(_this19.state.word);
+      });
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.getWord();
+    }
+  }, {
+    key: 'keyPress',
+    value: function keyPress(e) {
+      this.setState({
+        clickedLetter: e.key
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { className: 'main-wrapper' },
-        _react2.default.createElement(HangMan, null),
-        _react2.default.createElement(LettersMissed, null),
-        _react2.default.createElement(Word, null),
-        _react2.default.createElement(BlueTriangle, null)
-      );
+      var _this20 = this;
+
+      if (this.state.word != '') {
+        return _react2.default.createElement(
+          'div',
+          { className: 'main-wrapper' },
+          _react2.default.createElement('input', { className: 'hidden-input', onKeyPress: function onKeyPress(e) {
+              return _this20.keyPress(e);
+            }, autoFocus: true }),
+          _react2.default.createElement(HangMan, null),
+          _react2.default.createElement(LettersMissed, null),
+          _react2.default.createElement(Word, { word: this.state.word, letter: this.state.clickedLetter }),
+          _react2.default.createElement(BlueTriangle, null)
+        );
+      } else {
+        return _react2.default.createElement(
+          'h1',
+          null,
+          'Pobieranie danych'
+        );
+      }
     }
   }]);
 

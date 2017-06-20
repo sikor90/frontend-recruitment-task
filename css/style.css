@@ -1,7 +1,12 @@
+@font-face {
+  font-family: mainFont;
+  src: url(../fonts/AllerDisplay.ttf);
+}
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: mainFont;
 }
 body {
   background: #3b4163;
@@ -10,6 +15,10 @@ body {
   justify-content: center;
   height: 100vh;
   width: 100vw;
+}
+.hidden-input {
+  position: absolute;
+  left: -999em;
 }
 .main-wrapper {
   background: #f5f5f5;
@@ -183,4 +192,33 @@ body {
 .right-leg-wrapper {
   transform: rotate(80deg);
   transform-origin: bottom left;
+}
+.letterMissed-wrapper {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+}
+.letterMissed-wrapper h3 {
+  color: #53555d;
+}
+.letterMissed-wrapper h2 {
+  color: #4d69fa;
+}
+.word-wrapper {
+  font-size: 3rem;
+  position: absolute;
+  bottom: 5vh;
+  left: 5vw;
+  display: flex;
+}
+.letter {
+  background: #53555d;
+  margin: 0.2rem;
+  height: 4rem;
+  width: 4rem;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
 }

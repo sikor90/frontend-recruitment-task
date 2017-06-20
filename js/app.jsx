@@ -110,15 +110,38 @@ class HangMan extends React.Component {
 class LettersMissed extends React.Component {
   render() {
     return <div className="letterMissed-wrapper">
-
+      <h3>YOU MISSED:</h3>
+      <h2>A B C D E F G</h2>
     </div>;
   }
 }
+
 class Word extends React.Component {
+  constructor(props) {
+      super(props);
+      this.state = {
+          word: this.props.word.toLowerCase().split(''),
+          display: []
+      };
+  }
+  componentDidUpdate(){
+    if (this.props.word.indexOf(this.props.letter) != -1) {
+      console.log('sukces'+this.props.word.indexOf(this.props.letter));
+    }else {
+      console.log('zonk');
+    }
+  }
   render() {
     return <div className="word-wrapper">
-
+      {Array.from(this.state.word).map(function (item, index) {
+        return <div className="letter" key={index}></div>;
+      })}
     </div>;
+    // return <div className="word-wrapper">
+    //   {Array.from(this.state.word).map(function (item, index) {
+    //     return <div className="letter" key={index}></div>;
+    //   })}
+    // </div>;
   }
 }
 
@@ -130,16 +153,46 @@ class BlueTriangle extends React.Component {
 }
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      word: ''
+    };
+  }
+  getWord() {
+    fetch('http://api.wordnik.com:80/v4/words.json/randomWord?hasDictionaryDef=false&minCorpusCount=0&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5').then(
+      resp => {
+        return resp.json();
+      }).then( obj => {
+        this.setState({
+          word: obj.word
+        });
+        console.log(this.state.word);
+    });
+  }
+  componentDidMount() {
+    this.getWord();
+  }
+  keyPress(e){
+    this.setState({
+      clickedLetter: e.key
+    });
+  }
   render() {
-    return <div className="main-wrapper">
-      <HangMan />
-      <LettersMissed />
-      <Word />
-      <BlueTriangle />
-    </div>;
+    if (this.state.word != '') {
+      return <div className="main-wrapper">
+        <input className="hidden-input" onKeyPress={e=>this.keyPress(e)} autoFocus/>
+        <HangMan />
+        <LettersMissed />
+        <Word word={this.state.word} letter={this.state.clickedLetter}/>
+        <BlueTriangle />
+      </div>;
+    }else {
+      return <h1>Pobieranie danych</h1>
+    }
+
   }
 }
-
 document.addEventListener('DOMContentLoaded', function(){
     ReactDOM.render(
         <App />,
