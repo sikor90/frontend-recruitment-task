@@ -9864,18 +9864,68 @@ var Stomach = function (_React$Component4) {
   _createClass(Stomach, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { className: 'hangmanBody-wrapper' },
-        _react2.default.createElement(LeftArm, null),
-        _react2.default.createElement(
+      if (this.props.err == 0) {
+        return _react2.default.createElement(
           'div',
-          { className: 'stomach' },
-          _react2.default.createElement('div', { className: 'stomach-left' }),
-          _react2.default.createElement('div', { className: 'stomach-right' })
-        ),
-        _react2.default.createElement(RightArm, null)
-      );
+          { className: 'hangmanBody-wrapper' },
+          _react2.default.createElement(
+            'div',
+            { className: 'stomach' },
+            _react2.default.createElement('div', { className: 'stomach-left' }),
+            _react2.default.createElement('div', { className: 'stomach-right' })
+          )
+        );
+      } else if (this.props.err == 1) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'hangmanBody-wrapper' },
+          _react2.default.createElement(
+            'div',
+            { className: 'stomach' },
+            _react2.default.createElement('div', { className: 'stomach-left' }),
+            _react2.default.createElement('div', { className: 'stomach-right' })
+          ),
+          _react2.default.createElement(RightArm, { err: 0 })
+        );
+      } else if (this.props.err == 2) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'hangmanBody-wrapper' },
+          _react2.default.createElement(
+            'div',
+            { className: 'stomach' },
+            _react2.default.createElement('div', { className: 'stomach-left' }),
+            _react2.default.createElement('div', { className: 'stomach-right' })
+          ),
+          _react2.default.createElement(RightArm, { err: 1 })
+        );
+      } else if (this.props.err == 3) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'hangmanBody-wrapper' },
+          _react2.default.createElement(LeftArm, { err: 0 }),
+          _react2.default.createElement(
+            'div',
+            { className: 'stomach' },
+            _react2.default.createElement('div', { className: 'stomach-left' }),
+            _react2.default.createElement('div', { className: 'stomach-right' })
+          ),
+          _react2.default.createElement(RightArm, { err: 1 })
+        );
+      } else if (this.props.err == 4) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'hangmanBody-wrapper' },
+          _react2.default.createElement(LeftArm, { err: 1 }),
+          _react2.default.createElement(
+            'div',
+            { className: 'stomach' },
+            _react2.default.createElement('div', { className: 'stomach-left' }),
+            _react2.default.createElement('div', { className: 'stomach-right' })
+          ),
+          _react2.default.createElement(RightArm, { err: 1 })
+        );
+      }
     }
   }]);
 
@@ -9894,12 +9944,20 @@ var RightArm = function (_React$Component5) {
   _createClass(RightArm, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement('div', { className: 'right-arm' }),
-        _react2.default.createElement(RightHand, null)
-      );
+      if (this.props.err == 0) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement('div', { className: 'right-arm' })
+        );
+      } else if (this.props.err == 1) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement('div', { className: 'right-arm' }),
+          _react2.default.createElement(RightHand, null)
+        );
+      }
     }
   }]);
 
@@ -9918,12 +9976,20 @@ var LeftArm = function (_React$Component6) {
   _createClass(LeftArm, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement('div', { className: 'left-arm' }),
-        _react2.default.createElement(LeftHand, null)
-      );
+      if (this.props.err == 0) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement('div', { className: 'left-arm' })
+        );
+      } else if (this.props.err == 1) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement('div', { className: 'left-arm' }),
+          _react2.default.createElement(LeftHand, null)
+        );
+      }
     }
   }]);
 
@@ -9999,12 +10065,20 @@ var LeftLeg = function (_React$Component10) {
   _createClass(LeftLeg, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { className: 'left-leg-wrapper' },
-        _react2.default.createElement(LeftFoot, null),
-        _react2.default.createElement('div', { className: 'left-leg' })
-      );
+      if (this.props.err == 0) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'left-leg-wrapper' },
+          _react2.default.createElement('div', { className: 'left-leg' })
+        );
+      } else if (this.props.err == 1) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'left-leg-wrapper' },
+          _react2.default.createElement(LeftFoot, null),
+          _react2.default.createElement('div', { className: 'left-leg' })
+        );
+      }
     }
   }]);
 
@@ -10042,12 +10116,20 @@ var RightLeg = function (_React$Component12) {
   _createClass(RightLeg, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { className: 'right-leg-wrapper' },
-        _react2.default.createElement('div', { className: 'right-leg' }),
-        _react2.default.createElement(RightFoot, null)
-      );
+      if (this.props.err == 0) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'right-leg-wrapper' },
+          _react2.default.createElement('div', { className: 'right-leg' })
+        );
+      } else if (this.props.err == 1) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'right-leg-wrapper' },
+          _react2.default.createElement('div', { className: 'right-leg' }),
+          _react2.default.createElement(RightFoot, null)
+        );
+      }
     }
   }]);
 
@@ -10066,12 +10148,33 @@ var LegsWrapper = function (_React$Component13) {
   _createClass(LegsWrapper, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { className: 'legs-wrapper' },
-        _react2.default.createElement(LeftLeg, null),
-        _react2.default.createElement(RightLeg, null)
-      );
+      if (this.props.err == 0) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'legs-wrapper' },
+          _react2.default.createElement(RightLeg, { err: 0 })
+        );
+      } else if (this.props.err == 1) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'legs-wrapper' },
+          _react2.default.createElement(RightLeg, { err: 1 })
+        );
+      } else if (this.props.err == 2) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'legs-wrapper' },
+          _react2.default.createElement(LeftLeg, { err: 0 }),
+          _react2.default.createElement(RightLeg, { err: 1 })
+        );
+      } else if (this.props.err == 3) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'legs-wrapper' },
+          _react2.default.createElement(LeftLeg, { err: 1 }),
+          _react2.default.createElement(RightLeg, { err: 1 })
+        );
+      }
     }
   }]);
 
@@ -10118,7 +10221,7 @@ var HangMan = function (_React$Component14) {
           _react2.default.createElement(Bar, null),
           _react2.default.createElement(Head, null),
           _react2.default.createElement(Neck, null),
-          _react2.default.createElement(Stomach, null)
+          _react2.default.createElement(Stomach, { err: 0 })
         );
       } else if (this.props.errors == 4) {
         return _react2.default.createElement(
@@ -10127,8 +10230,74 @@ var HangMan = function (_React$Component14) {
           _react2.default.createElement(Bar, null),
           _react2.default.createElement(Head, null),
           _react2.default.createElement(Neck, null),
-          _react2.default.createElement(Stomach, null),
-          _react2.default.createElement(LegsWrapper, null)
+          _react2.default.createElement(Stomach, { err: 1 })
+        );
+      } else if (this.props.errors == 5) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'hangman-wrapper' },
+          _react2.default.createElement(Bar, null),
+          _react2.default.createElement(Head, null),
+          _react2.default.createElement(Neck, null),
+          _react2.default.createElement(Stomach, { err: 2 })
+        );
+      } else if (this.props.errors == 6) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'hangman-wrapper' },
+          _react2.default.createElement(Bar, null),
+          _react2.default.createElement(Head, null),
+          _react2.default.createElement(Neck, null),
+          _react2.default.createElement(Stomach, { err: 3 })
+        );
+      } else if (this.props.errors == 7) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'hangman-wrapper' },
+          _react2.default.createElement(Bar, null),
+          _react2.default.createElement(Head, null),
+          _react2.default.createElement(Neck, null),
+          _react2.default.createElement(Stomach, { err: 4 })
+        );
+      } else if (this.props.errors == 8) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'hangman-wrapper' },
+          _react2.default.createElement(Bar, null),
+          _react2.default.createElement(Head, null),
+          _react2.default.createElement(Neck, null),
+          _react2.default.createElement(Stomach, { err: 4 }),
+          _react2.default.createElement(LegsWrapper, { err: 0 })
+        );
+      } else if (this.props.errors == 9) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'hangman-wrapper' },
+          _react2.default.createElement(Bar, null),
+          _react2.default.createElement(Head, null),
+          _react2.default.createElement(Neck, null),
+          _react2.default.createElement(Stomach, { err: 4 }),
+          _react2.default.createElement(LegsWrapper, { err: 1 })
+        );
+      } else if (this.props.errors == 10) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'hangman-wrapper' },
+          _react2.default.createElement(Bar, null),
+          _react2.default.createElement(Head, null),
+          _react2.default.createElement(Neck, null),
+          _react2.default.createElement(Stomach, { err: 4 }),
+          _react2.default.createElement(LegsWrapper, { err: 2 })
+        );
+      } else if (this.props.errors == 11) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'hangman-wrapper' },
+          _react2.default.createElement(Bar, null),
+          _react2.default.createElement(Head, null),
+          _react2.default.createElement(Neck, null),
+          _react2.default.createElement(Stomach, { err: 4 }),
+          _react2.default.createElement(LegsWrapper, { err: 3 })
         );
       };
     }

@@ -21,31 +21,78 @@ class Neck extends React.Component {
 }
 class Stomach extends React.Component {
   render() {
-    return <div className="hangmanBody-wrapper">
-      <LeftArm />
-      <div className="stomach">
-        <div className="stomach-left"></div>
-        <div className="stomach-right"></div>
-      </div>
-      <RightArm />
-    </div>;
+    if (this.props.err == 0) {
+      return <div className="hangmanBody-wrapper">
+        <div className="stomach">
+          <div className="stomach-left"></div>
+          <div className="stomach-right"></div>
+        </div>
+      </div>;
+    }else if (this.props.err == 1) {
+      return <div className="hangmanBody-wrapper">
+        <div className="stomach">
+          <div className="stomach-left"></div>
+          <div className="stomach-right"></div>
+        </div>
+        <RightArm err={0}/>
+      </div>;
+    }else if (this.props.err == 2) {
+      return <div className="hangmanBody-wrapper">
+        <div className="stomach">
+          <div className="stomach-left"></div>
+          <div className="stomach-right"></div>
+        </div>
+        <RightArm err={1}/>
+      </div>;
+    }else if (this.props.err == 3) {
+      return <div className="hangmanBody-wrapper">
+        <LeftArm err={0}/>
+        <div className="stomach">
+          <div className="stomach-left"></div>
+          <div className="stomach-right"></div>
+        </div>
+        <RightArm err={1}/>
+      </div>;
+    }else if (this.props.err == 4) {
+      return <div className="hangmanBody-wrapper">
+        <LeftArm err={1}/>
+        <div className="stomach">
+          <div className="stomach-left"></div>
+          <div className="stomach-right"></div>
+        </div>
+        <RightArm err={1}/>
+      </div>;
+    }
   }
 }
 class RightArm extends React.Component {
   render() {
-    return <div>
-      <div className="right-arm"></div>
-      <RightHand />
-    </div>;
+    if (this.props.err==0) {
+      return <div>
+        <div className="right-arm"></div>
+      </div>;
+    }else if (this.props.err==1) {
+      return <div>
+        <div className="right-arm"></div>
+        <RightHand />
+      </div>;
+    }
   }
 }
 class LeftArm extends React.Component {
   render() {
-    return <div>
-      <div className="left-arm">
-      </div>
-      <LeftHand />
-    </div>;
+    if (this.props.err==0) {
+      return <div>
+        <div className="left-arm">
+        </div>
+      </div>;
+    }else if (this.props.err==1) {
+      return <div>
+        <div className="left-arm">
+        </div>
+        <LeftHand />
+      </div>;
+    }
   }
 }
 class RightHand extends React.Component {
@@ -68,10 +115,17 @@ class LeftFoot extends React.Component {
 }
 class LeftLeg extends React.Component {
   render() {
-    return <div className="left-leg-wrapper">
-      <LeftFoot />
-      <div className="left-leg"></div>
-    </div>;
+    if (this.props.err == 0){
+      return <div className="left-leg-wrapper">
+        <div className="left-leg"></div>
+      </div>;
+    }else if (this.props.err == 1){
+      return <div className="left-leg-wrapper">
+        <LeftFoot />
+        <div className="left-leg"></div>
+      </div>;
+    }
+
   }
 }
 class RightFoot extends React.Component {
@@ -82,22 +136,42 @@ class RightFoot extends React.Component {
 }
 class RightLeg extends React.Component {
   render() {
-    return <div className="right-leg-wrapper">
-      <div className="right-leg"></div>
-      <RightFoot />
-    </div>;
+    if (this.props.err == 0){
+      return <div className="right-leg-wrapper">
+        <div className="right-leg"></div>
+      </div>;
+    }else if (this.props.err == 1){
+      return <div className="right-leg-wrapper">
+        <div className="right-leg"></div>
+        <RightFoot />
+      </div>;
+    }
   }
 }
 class LegsWrapper extends React.Component {
   render() {
-    return <div className="legs-wrapper">
-      <LeftLeg />
-      <RightLeg />
-    </div>;
+    if (this.props.err == 0){
+      return <div className="legs-wrapper">
+        <RightLeg err={0}/>
+      </div>;
+    }else if (this.props.err == 1){
+      return <div className="legs-wrapper">
+        <RightLeg err={1}/>
+      </div>;
+    }else if (this.props.err == 2){
+      return <div className="legs-wrapper">
+        <LeftLeg err={0}/>
+        <RightLeg err={1}/>
+      </div>;
+    }else if (this.props.err == 3){
+      return <div className="legs-wrapper">
+        <LeftLeg err={1}/>
+        <RightLeg err={1}/>
+      </div>;
+    }
   }
 }
 class HangMan extends React.Component {
-
   render() {
     if (this.props.errors == 0){
       return <div className="hangman-wrapper">
@@ -119,15 +193,67 @@ class HangMan extends React.Component {
         <Bar />
         <Head />
         <Neck />
-        <Stomach />
+        <Stomach err={0} />
       </div>;
     }else if (this.props.errors == 4) {
       return <div className="hangman-wrapper">
         <Bar />
         <Head />
         <Neck />
-          <Stomach />
-          <LegsWrapper />
+        <Stomach err={1} />
+      </div>;
+    }else if (this.props.errors == 5) {
+      return <div className="hangman-wrapper">
+        <Bar />
+        <Head />
+        <Neck />
+        <Stomach err={2} />
+      </div>;
+    }else if (this.props.errors == 6) {
+      return <div className="hangman-wrapper">
+        <Bar />
+        <Head />
+        <Neck />
+        <Stomach err={3} />
+      </div>;
+    }else if (this.props.errors == 7) {
+      return <div className="hangman-wrapper">
+        <Bar />
+        <Head />
+        <Neck />
+        <Stomach err={4} />
+      </div>;
+    }else if (this.props.errors == 8) {
+      return <div className="hangman-wrapper">
+        <Bar />
+        <Head />
+        <Neck />
+        <Stomach err={4} />
+        <LegsWrapper err={0}/>
+      </div>
+    }else if (this.props.errors == 9) {
+      return <div className="hangman-wrapper">
+        <Bar />
+        <Head />
+        <Neck />
+        <Stomach err={4} />
+        <LegsWrapper err={1}/>
+      </div>
+    }else if (this.props.errors == 10) {
+      return <div className="hangman-wrapper">
+        <Bar />
+        <Head />
+        <Neck />
+        <Stomach err={4} />
+        <LegsWrapper err={2}/>
+      </div>
+    }else if (this.props.errors == 11) {
+      return <div className="hangman-wrapper">
+        <Bar />
+        <Head />
+        <Neck />
+        <Stomach err={4} />
+        <LegsWrapper err={3}/>
       </div>
     };
   }
