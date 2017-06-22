@@ -149,12 +149,7 @@ class Word extends React.Component {
           index: this.props.index
       };
   }
-  componentWillReceiveProps(nextProps) {
-    console.log('indexxxx BEFORE update ' + this.state.index);
-    console.log('indexxxx after update ' + nextProps.index);
-  }
   checkIndex(){
-    console.log('indexxxx ' + this.props.index);
     let helper = this.props.index;
     return Array.from(this.state.word).map(function (item, index) {
       if (helper.indexOf(index) != -1){
@@ -167,11 +162,6 @@ class Word extends React.Component {
     return <div className="word-wrapper">
       {this.checkIndex()}
     </div>;
-    // return <div className="word-wrapper">
-    //   {Array.from(this.state.word).map(function (item, index) {
-    //     return <div className="letter" key={index}></div>;
-    //   })}
-    // </div>;
   }
 }
 
@@ -192,7 +182,6 @@ class App extends React.Component {
       indexToShow: []
     };
   }
-
   getWord() {
     fetch('http://api.wordnik.com:80/v4/words.json/randomWord?hasDictionaryDef=false&minCorpusCount=0&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5').then(
       resp => {
@@ -211,19 +200,48 @@ class App extends React.Component {
     this.setState({
       clickedLetter: e.key
     }, function() {
-      let indexOfLetterInWord = this.state.word.indexOf(this.state.clickedLetter);
-      if (indexOfLetterInWord != -1) {
-        if (this.state.indexToShow.indexOf(indexOfLetterInWord) == -1) {
-          this.state.indexToShow.push(indexOfLetterInWord);
+
+      function getAllIndexes(arr, val) {
+        if(arr.indexOf(val)!=-1){
+          let indexes = [], i;
+          for(i = 0; i < arr.length; i++)
+              if (arr[i] === val)
+                  indexes.push(i);
+          return indexes;
+        }else {
+          return [-1];
+        }
+      }
+      let indexes = getAllIndexes(this.state.word, this.state.clickedLetter);
+      for (let i = 0; i < indexes.length; i++) {
+        let indexOfLetterInWord = indexes[i];
+        if (indexOfLetterInWord != -1) {
+          if (this.state.indexToShow.indexOf(indexOfLetterInWord) == -1) {
+            this.state.indexToShow.push(indexOfLetterInWord);
+            this.setState({
+              oks: this.state.oks+1
+            });
+          }
+        }else {
           this.setState({
-            oks: this.state.oks+1
+            errors: this.state.errors+1
           });
         }
-      }else {
-        this.setState({
-          errors: this.state.errors+1
-        });
       }
+
+      // let indexOfLetterInWord = this.state.word.indexOf(this.state.clickedLetter);
+      // if (indexOfLetterInWord != -1) {
+      //   if (this.state.indexToShow.indexOf(indexOfLetterInWord) == -1) {
+      //     this.state.indexToShow.push(indexOfLetterInWord);
+      //     this.setState({
+      //       oks: this.state.oks+1
+      //     });
+      //   }
+      // }else {
+      //   this.setState({
+      //     errors: this.state.errors+1
+      //   });
+      // }
     });
   }
   render() {

@@ -10187,15 +10187,8 @@ var Word = function (_React$Component16) {
   }
 
   _createClass(Word, [{
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      console.log('indexxxx BEFORE update ' + this.state.index);
-      console.log('indexxxx after update ' + nextProps.index);
-    }
-  }, {
     key: 'checkIndex',
     value: function checkIndex() {
-      console.log('indexxxx ' + this.props.index);
       var helper = this.props.index;
       return Array.from(this.state.word).map(function (item, index) {
         if (helper.indexOf(index) != -1) {
@@ -10216,11 +10209,6 @@ var Word = function (_React$Component16) {
         { className: 'word-wrapper' },
         this.checkIndex()
       );
-      // return <div className="word-wrapper">
-      //   {Array.from(this.state.word).map(function (item, index) {
-      //     return <div className="letter" key={index}></div>;
-      //   })}
-      // </div>;
     }
   }]);
 
@@ -10288,19 +10276,48 @@ var App = function (_React$Component18) {
       this.setState({
         clickedLetter: e.key
       }, function () {
-        var indexOfLetterInWord = this.state.word.indexOf(this.state.clickedLetter);
-        if (indexOfLetterInWord != -1) {
-          if (this.state.indexToShow.indexOf(indexOfLetterInWord) == -1) {
-            this.state.indexToShow.push(indexOfLetterInWord);
+
+        function getAllIndexes(arr, val) {
+          if (arr.indexOf(val) != -1) {
+            var _indexes = [],
+                i = void 0;
+            for (i = 0; i < arr.length; i++) {
+              if (arr[i] === val) _indexes.push(i);
+            }return _indexes;
+          } else {
+            return [-1];
+          }
+        }
+        var indexes = getAllIndexes(this.state.word, this.state.clickedLetter);
+        for (var i = 0; i < indexes.length; i++) {
+          var indexOfLetterInWord = indexes[i];
+          if (indexOfLetterInWord != -1) {
+            if (this.state.indexToShow.indexOf(indexOfLetterInWord) == -1) {
+              this.state.indexToShow.push(indexOfLetterInWord);
+              this.setState({
+                oks: this.state.oks + 1
+              });
+            }
+          } else {
             this.setState({
-              oks: this.state.oks + 1
+              errors: this.state.errors + 1
             });
           }
-        } else {
-          this.setState({
-            errors: this.state.errors + 1
-          });
         }
+
+        // let indexOfLetterInWord = this.state.word.indexOf(this.state.clickedLetter);
+        // if (indexOfLetterInWord != -1) {
+        //   if (this.state.indexToShow.indexOf(indexOfLetterInWord) == -1) {
+        //     this.state.indexToShow.push(indexOfLetterInWord);
+        //     this.setState({
+        //       oks: this.state.oks+1
+        //     });
+        //   }
+        // }else {
+        //   this.setState({
+        //     errors: this.state.errors+1
+        //   });
+        // }
       });
     }
   }, {
