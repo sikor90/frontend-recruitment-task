@@ -99,13 +99,37 @@ class LegsWrapper extends React.Component {
 class HangMan extends React.Component {
 
   render() {
-    return <div className="hangman-wrapper">
-      <Bar />
-      <Head />
-      <Neck />
-      <Stomach />
-      <LegsWrapper />
-    </div>;
+    if (this.props.errors == 0){
+      return <div className="hangman-wrapper">
+        <Bar />
+      </div>;
+    }else if (this.props.errors == 1) {
+      return <div className="hangman-wrapper">
+        <Bar />
+        <Head />
+      </div>;
+    }else if (this.props.errors == 2) {
+      return <div className="hangman-wrapper">
+        <Bar />
+        <Head />
+        <Neck />
+      </div>;
+    }else if (this.props.errors == 3) {
+      return <div className="hangman-wrapper">
+        <Bar />
+        <Head />
+        <Neck />
+        <Stomach />
+      </div>;
+    }else if (this.props.errors == 4) {
+      return <div className="hangman-wrapper">
+        <Bar />
+        <Head />
+        <Neck />
+          <Stomach />
+          <LegsWrapper />
+      </div>
+    };
   }
 }
 class LettersMissed extends React.Component {
@@ -121,36 +145,19 @@ class Word extends React.Component {
   constructor(props) {
       super(props);
       this.state = {
-          word: this.props.word.toLowerCase().split('')
+          word: this.props.word.toLowerCase().split(''),
+          index: this.props.index
       };
   }
-
+  componentWillReceiveProps(nextProps) {
+    console.log('indexxxx BEFORE update ' + this.state.index);
+    console.log('indexxxx after update ' + nextProps.index);
+  }
   checkIndex(){
-    // function getAllIndexes(arr, val) {
-    //   let indexes = [], i;
-    //   for(i = 0; i < arr.length; i++){
-    //     if (arr[i] === val){
-    //       indexes.push(i);
-    //     }
-    //   }
-    //   return indexes;
-    // }
-    // let indexOfLetterInWord = getAllIndexes(this.props.word, this.props.letter);
-
-    let indexOfLetterInWord = this.props.word.indexOf(this.props.letter);
-    console.log(indexOfLetterInWord);
-    if (indexOfLetterInWord != -1) {
-      console.log("wszedlem do pierwszego ifa"+indexToShow);
-      if (indexToShow.indexOf(indexOfLetterInWord) == -1) {
-        console.log("wszedlem do DRUGIEGO ifa");
-        indexToShow.push(indexOfLetterInWord);
-      }
-      console.log(indexToShow);
-    }else {
-      console.log('zonk');
-    }
+    console.log('indexxxx ' + this.props.index);
+    let helper = this.props.index;
     return Array.from(this.state.word).map(function (item, index) {
-      if (indexToShow.indexOf(index) != -1){
+      if (helper.indexOf(index) != -1){
         return <div className="letter" key={index}>{item}</div>;
       }
       return <div className="letter" key={index}></div>;
@@ -179,9 +186,13 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      word: ''
+      word: '',
+      errors: 0,
+      oks: 0,
+      indexToShow: []
     };
   }
+
   getWord() {
     fetch('http://api.wordnik.com:80/v4/words.json/randomWord?hasDictionaryDef=false&minCorpusCount=0&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5').then(
       resp => {
@@ -199,15 +210,29 @@ class App extends React.Component {
   keyPress(e){
     this.setState({
       clickedLetter: e.key
+    }, function() {
+      let indexOfLetterInWord = this.state.word.indexOf(this.state.clickedLetter);
+      if (indexOfLetterInWord != -1) {
+        if (this.state.indexToShow.indexOf(indexOfLetterInWord) == -1) {
+          this.state.indexToShow.push(indexOfLetterInWord);
+          this.setState({
+            oks: this.state.oks+1
+          });
+        }
+      }else {
+        this.setState({
+          errors: this.state.errors+1
+        });
+      }
     });
   }
   render() {
     if (this.state.word != '') {
       return <div className="main-wrapper">
         <input className="hidden-input" onKeyPress={e=>this.keyPress(e)} autoFocus/>
-        <HangMan />
+        <HangMan errors={this.state.errors}/>
         <LettersMissed />
-        <Word word={this.state.word} letter={this.state.clickedLetter}/>
+        <Word word={this.state.word} index={this.state.indexToShow}/>
         <BlueTriangle />
       </div>;
     }else {

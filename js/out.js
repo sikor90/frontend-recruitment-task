@@ -10090,15 +10090,47 @@ var HangMan = function (_React$Component14) {
   _createClass(HangMan, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { className: 'hangman-wrapper' },
-        _react2.default.createElement(Bar, null),
-        _react2.default.createElement(Head, null),
-        _react2.default.createElement(Neck, null),
-        _react2.default.createElement(Stomach, null),
-        _react2.default.createElement(LegsWrapper, null)
-      );
+      if (this.props.errors == 0) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'hangman-wrapper' },
+          _react2.default.createElement(Bar, null)
+        );
+      } else if (this.props.errors == 1) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'hangman-wrapper' },
+          _react2.default.createElement(Bar, null),
+          _react2.default.createElement(Head, null)
+        );
+      } else if (this.props.errors == 2) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'hangman-wrapper' },
+          _react2.default.createElement(Bar, null),
+          _react2.default.createElement(Head, null),
+          _react2.default.createElement(Neck, null)
+        );
+      } else if (this.props.errors == 3) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'hangman-wrapper' },
+          _react2.default.createElement(Bar, null),
+          _react2.default.createElement(Head, null),
+          _react2.default.createElement(Neck, null),
+          _react2.default.createElement(Stomach, null)
+        );
+      } else if (this.props.errors == 4) {
+        return _react2.default.createElement(
+          'div',
+          { className: 'hangman-wrapper' },
+          _react2.default.createElement(Bar, null),
+          _react2.default.createElement(Head, null),
+          _react2.default.createElement(Neck, null),
+          _react2.default.createElement(Stomach, null),
+          _react2.default.createElement(LegsWrapper, null)
+        );
+      };
     }
   }]);
 
@@ -10148,39 +10180,25 @@ var Word = function (_React$Component16) {
     var _this16 = _possibleConstructorReturn(this, (Word.__proto__ || Object.getPrototypeOf(Word)).call(this, props));
 
     _this16.state = {
-      word: _this16.props.word.toLowerCase().split('')
+      word: _this16.props.word.toLowerCase().split(''),
+      index: _this16.props.index
     };
     return _this16;
   }
 
   _createClass(Word, [{
+    key: 'componentWillReceiveProps',
+    value: function componentWillReceiveProps(nextProps) {
+      console.log('indexxxx BEFORE update ' + this.state.index);
+      console.log('indexxxx after update ' + nextProps.index);
+    }
+  }, {
     key: 'checkIndex',
     value: function checkIndex() {
-      // function getAllIndexes(arr, val) {
-      //   let indexes = [], i;
-      //   for(i = 0; i < arr.length; i++){
-      //     if (arr[i] === val){
-      //       indexes.push(i);
-      //     }
-      //   }
-      //   return indexes;
-      // }
-      // let indexOfLetterInWord = getAllIndexes(this.props.word, this.props.letter);
-
-      var indexOfLetterInWord = this.props.word.indexOf(this.props.letter);
-      console.log(indexOfLetterInWord);
-      if (indexOfLetterInWord != -1) {
-        console.log("wszedlem do pierwszego ifa" + indexToShow);
-        if (indexToShow.indexOf(indexOfLetterInWord) == -1) {
-          console.log("wszedlem do DRUGIEGO ifa");
-          indexToShow.push(indexOfLetterInWord);
-        }
-        console.log(indexToShow);
-      } else {
-        console.log('zonk');
-      }
+      console.log('indexxxx ' + this.props.index);
+      var helper = this.props.index;
       return Array.from(this.state.word).map(function (item, index) {
-        if (indexToShow.indexOf(index) != -1) {
+        if (helper.indexOf(index) != -1) {
           return _react2.default.createElement(
             'div',
             { className: 'letter', key: index },
@@ -10237,7 +10255,10 @@ var App = function (_React$Component18) {
     var _this18 = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this18.state = {
-      word: ''
+      word: '',
+      errors: 0,
+      oks: 0,
+      indexToShow: []
     };
     return _this18;
   }
@@ -10266,6 +10287,20 @@ var App = function (_React$Component18) {
     value: function keyPress(e) {
       this.setState({
         clickedLetter: e.key
+      }, function () {
+        var indexOfLetterInWord = this.state.word.indexOf(this.state.clickedLetter);
+        if (indexOfLetterInWord != -1) {
+          if (this.state.indexToShow.indexOf(indexOfLetterInWord) == -1) {
+            this.state.indexToShow.push(indexOfLetterInWord);
+            this.setState({
+              oks: this.state.oks + 1
+            });
+          }
+        } else {
+          this.setState({
+            errors: this.state.errors + 1
+          });
+        }
       });
     }
   }, {
@@ -10280,9 +10315,9 @@ var App = function (_React$Component18) {
           _react2.default.createElement('input', { className: 'hidden-input', onKeyPress: function onKeyPress(e) {
               return _this20.keyPress(e);
             }, autoFocus: true }),
-          _react2.default.createElement(HangMan, null),
+          _react2.default.createElement(HangMan, { errors: this.state.errors }),
           _react2.default.createElement(LettersMissed, null),
-          _react2.default.createElement(Word, { word: this.state.word, letter: this.state.clickedLetter }),
+          _react2.default.createElement(Word, { word: this.state.word, index: this.state.indexToShow }),
           _react2.default.createElement(BlueTriangle, null)
         );
       } else {
