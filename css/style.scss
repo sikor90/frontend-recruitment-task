@@ -1,0 +1,72 @@
+@font-face {
+  font-family: mainFont;
+  src: url(../fonts/AllerDisplay.ttf);
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: mainFont;
+}
+@import "hangman";
+body {
+  background: #3b4163;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+.hidden-input {
+  position: absolute;
+  left: -999em;
+}
+.main-wrapper {
+  background: #f5f5f5;
+  border-radius: 5px;
+  height: 80vh;
+  width: 80vw;
+  overflow: hidden;
+  position: relative;
+}
+.blue-triangle {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 15vmax 15vmax;
+  border-color: transparent transparent #4d69fa transparent;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+.letterMissed-wrapper {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+}
+.letterMissed-wrapper h3 {
+  color: #53555d;
+}
+.letterMissed-wrapper h2 {
+  color: #4d69fa;
+  font-size: 4rem;
+  letter-spacing: 0.5rem;
+}
+.word-wrapper {
+  font-size: 3rem;
+  position: absolute;
+  bottom: 5vh;
+  left: 5vw;
+  display: flex;
+}
+.letter {
+  background: #53555d;
+  margin: 0.2rem;
+  height: 4rem;
+  width: 4rem;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+}
