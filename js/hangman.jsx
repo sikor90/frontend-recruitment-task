@@ -63,7 +63,7 @@ export default class HangMan extends React.Component {
         <Neck />
         <Stomach err={4} />
         <LegsWrapper err={0}/>
-      </div>
+      </div>;
     }else if (this.props.errors == 9) {
       return <div className="hangman-wrapper">
         <Bar />
@@ -71,7 +71,7 @@ export default class HangMan extends React.Component {
         <Neck />
         <Stomach err={4} />
         <LegsWrapper err={1}/>
-      </div>
+      </div>;
     }else if (this.props.errors == 10) {
       return <div className="hangman-wrapper">
         <Bar />
@@ -79,7 +79,7 @@ export default class HangMan extends React.Component {
         <Neck />
         <Stomach err={4} />
         <LegsWrapper err={2}/>
-      </div>
+      </div>;
     }else if (this.props.errors >= 11) {
       return <div className="hangman-wrapper">
         <Bar />
@@ -87,7 +87,7 @@ export default class HangMan extends React.Component {
         <Neck />
         <Stomach err={4} />
         <LegsWrapper err={3}/>
-      </div>
-    };
+      </div>;
+    }
   }
 }

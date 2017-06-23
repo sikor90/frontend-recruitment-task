@@ -12,6 +12,5 @@ export default class LeftLeg extends React.Component {
         <div className="left-leg"></div>
       </div>;
     }
-
   }
 }
